@@ -17,28 +17,45 @@
       </div>
 
       <div class="right menu">
-        <router-link class="item" to="/login" >       <!-- v-if="!token" -->
+        <router-link class="item" to="/login" v-if="!token">
           Iniciar sesión
         </router-link>
-        <!-- <template v-if="token">
+        <template v-if="token">
           <router-link class="item" to="/orders">Pedidos</router-link>
           <span class="ui item cart" @click="openCart">
             <i class="shopping cart icon"></i>
           </span>
-          <span class="ui item logout" @click="logout">
-            <i class="sign-out icon"></i>
+          <span class="ui item logout" @click="handlerLogout">
+            <i class="sign out alternate icon"></i>
           </span>
-        </template> -->
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-    name:"Menu",
+import { ref, onMounted } from "vue";
+import { getTokenApi, deleteTokenApi } from "../api/token";
+import { useStore } from "vuex";
 
-}
+export default {
+  name: "Menu",
+  setup() {
+    const token = getTokenApi();
+    const store = useStore();
+
+    const handlerLogout = () => {
+      deleteTokenApi();
+      location.replace("/");
+    };
+
+    return{
+        handlerLogout,
+        token
+    }
+  },
+};
 </script>
 
 <style lang="scss" scoped>
