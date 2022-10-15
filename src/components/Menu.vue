@@ -17,7 +17,7 @@
       </div>
 
       <div class="right menu">
-        <router-link class="item" to="/login" v-if="!token">
+        <router-link class="item" to="/login" >       <!-- v-if="!token" -->
           Iniciar sesión
         </router-link>
         <!-- <template v-if="token">

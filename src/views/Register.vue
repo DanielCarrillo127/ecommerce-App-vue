@@ -44,9 +44,11 @@
 
 <script>
 import BasicLayout from "../layouts/BasicLayout.vue";
-import {ref, onMounted} from "vue";
+import { ref, onMounted } from "vue";
 import * as Yup from "yup";
 import { useRouter } from "vue-router";
+import { registerApi } from "../api/user";
+import { getTokenApi } from "../api/token";
 
 export default {
   name: "Register",
@@ -55,6 +57,8 @@ export default {
     let formError = ref({});
     let loading = ref(false);
     const router = useRouter();
+    const token = getTokenApi();
+    
 
     const schemaForm = Yup.object().shape({
       username: Yup.string().required(true),
@@ -62,15 +66,18 @@ export default {
       password: Yup.string().required(true),
     });
 
+    onMounted(() => {
+      if (token) router.push("/");
+    });
 
-    const handlerRegister = async () =>{
-         formError.value = {};
+    const handlerRegister = async () => {
+      formError.value = {};
       loading.value = true;
 
-       try {
+      try {
         await schemaForm.validate(formData.value, { abortEarly: false });
         try {
-        //   const response = await registerApi(formData.value);
+          const response = await registerApi(formData.value);
           router.push("/login");
         } catch (error) {
           console.log(error);
@@ -81,13 +88,13 @@ export default {
         });
       }
       loading.value = false;
-    }
+    };
 
     return {
       formData,
       formError,
       loading,
-      handlerRegister
+      handlerRegister,
     };
   },
   components: {
