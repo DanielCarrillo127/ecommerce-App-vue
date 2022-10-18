@@ -34,6 +34,8 @@ export default {
       const response = await getProductsCartApi();
       products.value = response;
     };
+
+    //everything inside the funtion rebuild when any funtion inside change 
     watchEffect(() => {
       showCart.value;
       realodCart.value;

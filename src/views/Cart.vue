@@ -29,7 +29,7 @@
 
     <button
       class="ui button primary fluid"
-      @click="createOrder"
+      @click="handlerCreateOrder"
       v-if="products"
     >
       Generar pedido
@@ -42,14 +42,14 @@
 <script>
 import { ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
-// import jwtDecode from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import BasicLayout from "../layouts/BasicLayout";
 import {
   getProductsCartApi,
   deleteAllProductCartApi,
   deleteCartApi,
 } from "../api/cart";
-// import { createOrderApi } from "../api/order";
+import { createOrderApi } from "../api/order";
 import { getTokenApi } from "../api/token";
 export default {
   name: "Cart",
@@ -76,7 +76,7 @@ export default {
       deleteAllProductCartApi(idProduct);
       realodCart.value = !realodCart.value;
     };
-    const createOrder = async () => {
+    const handlerCreateOrder = async () => {
       const token = getTokenApi();
       const { id } = jwtDecode(token);
       const data = {
@@ -84,7 +84,8 @@ export default {
         totalPayment: getTotal(),
         data: products.value,
       };
-      try {
+
+try {
         const response = await createOrderApi(data);
         deleteCartApi();
         router.push("/orders");
@@ -96,7 +97,7 @@ export default {
       products,
       getTotal,
       deleteAllProductCart,
-      createOrder,
+      handlerCreateOrder,
     };
   },
 };
