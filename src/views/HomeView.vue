@@ -7,7 +7,7 @@
         v-for="product in products"
         :key="product.attributes.id"
       >
-        <Product :product="product.attributes" />
+        <Product :product="product.attributes"  :productid="product.id"/>
       </div>
     </div>
   </BasicLayout>

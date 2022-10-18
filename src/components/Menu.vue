@@ -52,6 +52,9 @@ export default {
       location.replace("/");
     };
 
+    const openCart = () => {
+      store.commit("setShowCart", true);
+    };
     onMounted(async () => {
       const response = await getCategoriesApi();
       categories.value = response.data;
@@ -61,6 +64,7 @@ export default {
       handlerLogout,
       token,
       categories,
+      openCart
     };
   },
 };

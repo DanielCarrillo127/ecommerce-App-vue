@@ -7,7 +7,7 @@
       <div class="header">{{ product.name }}</div>
       <div class="description">{{ product.price }} $</div>
     </div>
-   <div class="ui button primary" @click="addProductCart(product.id)" >
+   <div class="ui button primary" @click="addProductCart(productid)" >
       Comprar
     </div>
   </div>
@@ -15,15 +15,17 @@
 
 <script>
 import { API_URL_IMAGE } from "../utils/constants";
-// import { addProductCartApi } from "../api/cart";
+import { addProductCartApi } from "../api/cart";
+import { object } from 'yup/lib/locale';
 export default {
   name: "Product",
   props: {
     product: Object,
+    productid: Number,
   },
   setup(props) {
     const addProductCart = (idProduct) => {
-    //   addProductCartApi(idProduct);
+     addProductCartApi(idProduct);
     };
     return {
       API_URL_IMAGE,

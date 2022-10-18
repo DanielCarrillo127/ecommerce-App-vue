@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Category from "../views/Category.vue";
+import Cart from "../views/Cart.vue"
+import { CAMELIZE } from '@vue/compiler-core';
 
 const routes = [
   {
@@ -24,6 +26,11 @@ const routes = [
     path: "/:category",
     component: Category,
   },
+  {
+    path: "/cart",
+    component: Cart,
+  },
+
 ]
 
 const router = createRouter({
