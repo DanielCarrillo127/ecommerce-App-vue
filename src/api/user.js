@@ -2,7 +2,7 @@ import { API_URL } from "../utils/constants";
 
 export async function registerApi(fromData) {
   try {
-    const url = `${API_URL}/api/auth/local/register`;
+    const url = `${API_URL}/auth/local/register`;
     const params = {
       method: "POST",
       headers: {
@@ -21,7 +21,7 @@ export async function registerApi(fromData) {
 
 export async function loginApi(fromData) {
     try {
-      const url = `${API_URL}/api/auth/local`;
+      const url = `${API_URL}/auth/local`;
       const params = {
         method: "POST",
         headers: {

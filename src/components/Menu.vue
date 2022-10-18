@@ -8,11 +8,11 @@
             src="../assets/logo.png"
             alt="Ecommerce"
           />
-          <!-- <template v-for="category in categories" :key="category.id">
-            <router-link class="item" :to="category.slug">
-              {{ category.title }}
-            </router-link>
-          </template> -->
+          <template v-for="category in categories" :key="category.attributes.id">
+            <router-link class="item" :to="category.attributes.slug">
+              {{ category.attributes.title }}
+            </router-link> 
+          </template>
         </router-link>
       </div>
 
@@ -38,22 +38,30 @@
 import { ref, onMounted } from "vue";
 import { getTokenApi, deleteTokenApi } from "../api/token";
 import { useStore } from "vuex";
+import { getCategoriesApi } from "../api/category";
 
 export default {
   name: "Menu",
   setup() {
     const token = getTokenApi();
     const store = useStore();
+    const categories = ref(null);
 
     const handlerLogout = () => {
       deleteTokenApi();
       location.replace("/");
     };
 
-    return{
-        handlerLogout,
-        token
-    }
+    onMounted(async () => {
+      const response = await getCategoriesApi();
+      categories.value = response.data;
+    });
+
+    return {
+      handlerLogout,
+      token,
+      categories,
+    };
   },
 };
 </script>
